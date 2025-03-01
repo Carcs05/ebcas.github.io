@@ -53,6 +53,7 @@
             </div>
             <h2>Subjects Taken</h2>
             <div id="course-list">
+                <ul id="courses-ul"></ul>
             </div>
         </div>
     </div>
@@ -62,28 +63,27 @@
         const jsonURL = "https://raw.githubusercontent.com/Carcs05/ebcas.github.io/refs/heads/main/courses.json"; 
 
         fetch(jsonURL)
-            .then(response => response.json()) 
-            .then(data => {
-                
-                let courseList = document.getElementById("course-list");
-
-                
-                if (data.courses && Array.isArray(data.courses)) {
-                    data.courses.forEach(course => {
-                        
-                        let listItem = document.createElement("li");
-
-                        
-                        listItem.textContent = `${course.year_level} - ${course.sem} - ${course.code}: ${course.description} (Credits: ${course.credit})`;
-
-                        
-                        courseList.appendChild(listItem);
-                    });
-                } else {
-                    console.error("Expected 'courses' array but got:", data);
-                }
-            })
-            .catch(error => console.error("Error fetching courses:", error));
+    .then(response => response.json()) 
+    .then(data => {
+        let courseListDiv = document.getElementById("course-list");
+        
+        // Create a ul element
+        let ulElement = document.createElement("ul");
+        
+        if (data.courses && Array.isArray(data.courses)) {
+            data.courses.forEach(course => {
+                let listItem = document.createElement("li");
+                listItem.textContent = `${course.year_level} - ${course.sem} - ${course.code}: ${course.description} (Credits: ${course.credit})`;
+                ulElement.appendChild(listItem);
+            });
+            
+            // Append the ul to the div
+            courseListDiv.appendChild(ulElement);
+        } else {
+            console.error("Expected 'courses' array but got:", data);
+        }
+    })
+    .catch(error => console.error("Error fetching courses:", error));
     </script>
 </body>
 </html>
