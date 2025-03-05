@@ -26,8 +26,8 @@
         </nav>
 
         <figure>
-        <img src="scenery.jpg" alt="Scenery" class="scenery-image">
-        <figcaption> This is a picture of a scenery</figcaption>
+            <img src="scenery.jpg" alt="Scenery" class="scenery-image">
+            <figcaption>This is a picture of a scenery</figcaption>
         </figure>
 
         <div class="page-content-text">I am division with class equal to page-content that encloses all other division elements below</div>
@@ -51,39 +51,42 @@
                 <p class="card-header">Portfolio</p>
                 <p class="card-body">Share your previous IT projects</p>
             </div>
-            <h2>Subjects Taken</h2>
-            <div id="course-list">
-                <ul id="courses-ul"></ul>
+
+            <!-- Subjects Taken Section inside a card -->
+            <div class="card" id="subjects-taken">
+                <p class="card-header">Subjects Taken</p>
+                <div class="card-body">
+                    <div id="course-list">
+                        <ul id="courses-ul"></ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        
         const jsonURL = "https://raw.githubusercontent.com/Carcs05/ebcas.github.io/refs/heads/main/courses.json"; 
 
         fetch(jsonURL)
-    .then(response => response.json()) 
-    .then(data => {
-        let courseListDiv = document.getElementById("course-list");
-        
-        // Create a ul element
-        let ulElement = document.createElement("ul");
-        
-        if (data.courses && Array.isArray(data.courses)) {
-            data.courses.forEach(course => {
-                let listItem = document.createElement("li");
-                listItem.textContent = `${course.year_level} - ${course.sem} - ${course.code}: ${course.description} (Credits: ${course.credit})`;
-                ulElement.appendChild(listItem);
-            });
-            
-            // Append the ul to the div
-            courseListDiv.appendChild(ulElement);
-        } else {
-            console.error("Expected 'courses' array but got:", data);
-        }
-    })
-    .catch(error => console.error("Error fetching courses:", error));
+            .then(response => response.json()) 
+            .then(data => {
+                let courseListDiv = document.getElementById("course-list");
+                
+                let ulElement = document.createElement("ul");
+                
+                if (data.courses && Array.isArray(data.courses)) {
+                    data.courses.forEach(course => {
+                        let listItem = document.createElement("li");
+                        listItem.textContent = `${course.year_level} - ${course.sem} - ${course.code}: ${course.description} (Credits: ${course.credit})`;
+                        ulElement.appendChild(listItem);
+                    });
+                    
+                    courseListDiv.appendChild(ulElement);
+                } else {
+                    console.error("Expected 'courses' array but got:", data);
+                }
+            })
+            .catch(error => console.error("Error fetching courses:", error));
     </script>
 </body>
 </html>
